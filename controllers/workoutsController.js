@@ -20,4 +20,18 @@ router.post("/", (req, res) => {
   res.status(201).send(workouts[workouts.length - 1]);
 });
 
+router.delete("/id", (req, res) => {
+  const { id } = req.params;
+  const workoutToDeleteIndex = workouts.findIndex(
+    (workout) => workout.id === +id
+  );
+
+  if (workoutToDeleteIndex !== -1) {
+    workouts.splice(workoutToDeleteIndex, 1);
+    res.redirect("/workouts");
+  } else {
+    res.status(404).send({ error: `Workout with id: ${id} not found!` });
+  }
+});
+
 module.exports = router;
